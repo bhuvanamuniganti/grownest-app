@@ -4,7 +4,7 @@
 
 .home-bg {
   min-height: 100vh;
-  background-image: url("./assets/grownestbg.png");
+  background-image: url("/grownestbg.png");
   background-size: cover;
   background-position: left center; 
   background-repeat: no-repeat;
