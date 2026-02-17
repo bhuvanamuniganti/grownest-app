@@ -1,0 +1,467 @@
+/* =====================================================
+   DESIGN TOKENS (easy future tuning)
+===================================================== */
+:root {
+  --bg-page: #eef4f1;
+
+  --card-bg: #f8fbfa;
+  --card-border: #dde7e3;
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+
+  --primary: #1e40af;      /* dark blue */
+  --success: #166534;      /* dark green */
+  --danger: #991b1b;       /* dark red */
+  --warning: #92400e;      /* dark amber */
+  --info: #075985;         /* dark cyan */
+  --purple: #5b21b6;
+  --gray-btn: #374151;
+
+  --radius-lg: 16px;
+  --radius-md: 10px;
+}
+
+/* =====================================================
+   BASE RESET
+===================================================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg-page);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text-main);
+}
+
+/* =====================================================
+   ROOT WRAPPER
+===================================================== */
+.confident-root {
+  max-width: 980px;
+  margin: 32px auto;
+  padding: 0 16px 60px;
+}
+
+/* =====================================================
+   CARD SYSTEM
+===================================================== */
+.cs-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.cs-header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.cs-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #14532d;
+}
+
+.cs-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* =====================================================
+   SUGGESTION CHIPS
+===================================================== */
+.cs-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.chip {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  background: #e5edff;
+  color: #1e3a8a;
+  border: 1px solid #c7d2fe;
+  cursor: pointer;
+}
+
+.chip:hover {
+  background: #dbeafe;
+}
+
+.chip-active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+/* =====================================================
+   INPUTS
+===================================================== */
+.cs-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.cs-input,
+.cs-select,
+.cs-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+}
+
+.cs-textarea {
+  resize: vertical;
+}
+
+/* =====================================================
+   BUTTON RESET (kills Bootstrap completely)
+===================================================== */
+button {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* spacing between buttons */
+.btn + .btn {
+  margin-left: 10px;
+}
+
+/* =====================================================
+   BUTTON COLORS (EXPLICIT – NO DEFAULTS)
+===================================================== */
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.btn-next {
+  background: var(--success);
+  color: #ffffff;
+}
+
+.btn-muted {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.btn-record {
+  background: var(--success);
+  color: #ffffff;
+}
+
+.btn-stop {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+.btn-play {
+  background: var(--info);
+  color: #ffffff;
+}
+
+.btn-transcribe {
+  background: var(--purple);
+  color: #ffffff;
+}
+
+.btn-download {
+  background: #047857;
+  color: #ffffff;
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+.btn-translate {
+  background: #0f766e;
+  color: #ffffff;
+}
+
+.btn-pause {
+  background: var(--warning);
+  color: #ffffff;
+}
+
+.btn-resume {
+  background: #15803d;
+  color: #ffffff;
+}
+
+/* =====================================================
+   RECORDER
+===================================================== */
+.mini-recorder {
+  background: #edf5f2;
+  border: 1px dashed #9fbfb4;
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.mini-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rec-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot-on { background: var(--success); }
+.dot-off { background: #9ca3af; }
+
+/* =====================================================
+   TAKES LIST
+===================================================== */
+.takes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.take {
+  background: #f1f5f9;
+  border: 1px solid #dbe3ea;
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.take-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* =====================================================
+   FEEDBACK / METRICS
+===================================================== */
+.cs-center {
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.cs-bigscore {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.cs-bar {
+  height: 10px;
+  background: #d1d5db;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 14px 0 20px;
+}
+
+.cs-barfill {
+  height: 100%;
+  background: var(--success);
+}
+
+/* metrics grid */
+.cs-grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.metric {
+  background: #ecfdf5;
+  border: 1px solid #bbf7d0;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  text-align: center;
+}
+
+.mname {
+  font-size: 13px;
+  color: #065f46;
+}
+
+.mval {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* =====================================================
+   INNER BOXES
+===================================================== */
+.cs-box {
+  background: #045882;
+  border: 1px solid #dbe3ea;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.label {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.cs-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media (max-width: 640px) {
+  .cs-row {
+    flex-direction: column;
+  }
+
+  .cs-grid3 {
+    grid-template-columns: 1fr;
+  }
+}
+/* =====================================================
+   HARD BOOTSTRAP OVERRIDES (FINAL FIX)
+===================================================== */
+
+/* Kill Bootstrap button backgrounds completely */
+.confident-root button,
+.confident-root .btn {
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* ---------- FORCE BUTTON COLORS ---------- */
+
+/* NEXT */
+.confident-root .btn-next,
+.confident-root .btn-primary {
+  background-color: #166534 !important;
+  color: #ffffff !important;
+}
+
+/* RESET */
+.confident-root .btn-reset,
+.confident-root .btn-muted {
+  background-color: #991b1b !important;
+  color: #ffffff !important;
+}
+
+/* CLEAR */
+.confident-root button:contains("Clear"),
+.confident-root .btn-clear {
+  background-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+/* TRANSCRIBE */
+.confident-root .btn-transcribe {
+  background-color: #5b21b6 !important;
+  color: #ffffff !important;
+}
+
+/* TRANSLATE */
+.confident-root .btn-translate {
+  background-color: #0f766e !important;
+  color: #ffffff !important;
+}
+
+/* PLAY */
+.confident-root .btn-play {
+  background-color: #075985 !important;
+  color: #ffffff !important;
+}
+
+/* DOWNLOAD */
+.confident-root .btn-download {
+  background-color: #047857 !important;
+  color: #ffffff !important;
+}
+
+/* DELETE */
+.confident-root .btn-danger {
+  background-color: #991b1b !important;
+  color: #ffffff !important;
+}
+
+/* RECORD / START */
+.confident-root .btn-record {
+  background-color: #14532d !important;
+  color: #ffffff !important;
+}
+
+/* STOP */
+.confident-root .btn-stop {
+  background-color: #7f1d1d !important;
+  color: #ffffff !important;
+}
+
+/* DISABLED */
+.confident-root button:disabled {
+  opacity: 0.6 !important;
+}
+
+/* ---------- BUTTON SPACING ---------- */
+.confident-root .cs-actions,
+.confident-root .take-actions {
+  gap: 12px !important;
+}
+
+/* =====================================================
+   CARD BACKGROUND FIX (missing sections)
+===================================================== */
+
+/* Any section that visually looks like a card */
+.confident-root section,
+.confident-root .takes,
+.confident-root .take,
+.confident-root .mini-recorder,
+.confident-root .example-controls {
+  background-color: #f8fbfa !important;
+  border-radius: 16px !important;
+}
+
+/* Inner blocks */
+.confident-root .cs-box,
+.confident-root .metric {
+  background-color: #f1f5f9 !important;
+}
+
+/* Transcript & translated areas */
+.confident-root textarea {
+  background-color: #ffffff !important;
+}

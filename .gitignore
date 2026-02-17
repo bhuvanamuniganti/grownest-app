@@ -1,0 +1,21 @@
+@"
+# Dependencies
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Temp files
+backend/tmp/
+
+# Environment files
+.env
+backend/.env
+frontend/.env
+
+# Logs
+*.log
+
+# Build folders
+dist/
+build/
+"@ | Out-File -Encoding utf8 .gitignore

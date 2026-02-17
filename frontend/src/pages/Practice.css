@@ -1,0 +1,145 @@
+* {
+  box-sizing: border-box;
+}
+
+.practice-page {
+  min-height: 100vh;
+  padding: 20px;
+  background: #f7fafc;
+  margin: 40px;
+}
+
+/* Header */
+.practice-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.back-btn {
+  background: #e2e8f0;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background: #cbd5e1;
+}
+
+
+
+/* Child info */
+.child-info {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Grid */
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+
+
+
+/* ✅ Large screens: 2 cards per row */
+@media (min-width: 900px) {
+  .section-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.practice-page {
+  min-height: 100vh;
+  padding: 24px;
+  background: linear-gradient(
+    180deg,
+    #f0fdf4 0%,
+    #f8fafc 60%,
+    #ffffff 100%
+  );
+}
+
+/* Header */
+.practice-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.back-btn {
+  background: #e95e07;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 19px;
+  cursor: pointer;
+  font-weight: bold;
+  color:#e2e8f0
+}
+
+.back-btn:hover {
+  background: #ebd6cc;
+}
+
+h2 {
+  color: #03120b;
+  margin: 0;
+}
+
+/* Child info */
+.child-info {
+  margin: 14px 0 22px;
+  color: #334155;
+}
+
+/* Grid layout */
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+/* Cards */
+.practice-card {
+  background: #f5ede1f4;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 12px 28px rgba(175, 161, 161, 0.08);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.practice-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
+}
+
+.practice-card h3 {
+  margin-bottom: 8px;
+  color: #020c08;
+}
+
+.practice-card p {
+  color: #332424;
+  line-height: 1.4;
+}
+
+/* Large devices: 2 cards per row */
+@media (min-width: 900px) {
+  .section-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
