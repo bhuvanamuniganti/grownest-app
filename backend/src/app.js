@@ -9,7 +9,17 @@ const fileUpload = require("express-fileupload");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // local development
+      "https://grownestapp.netlify.app", // production frontend
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 app.use(fileUpload({
   useTempFiles: true,
