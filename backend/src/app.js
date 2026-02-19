@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const translatorsRoutes = require("./routes/translators");
 const speakingRoutes = require("./routes/speakingRoutes")
-
+const learningRoutes = require("./routes/learningRoutes")
 
 const fileUpload = require("express-fileupload");
 
@@ -33,6 +33,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/ai", translatorsRoutes);
 app.use("/api/speaking", speakingRoutes)
+app.use("/api/learning", learningRoutes)
 
 
 module.exports = app; 

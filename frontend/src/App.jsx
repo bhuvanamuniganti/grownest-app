@@ -3,6 +3,7 @@ import Home from "./pages/Home.jsx";
 import Practice from "./pages/Practice";
 import AudioBooks from "./pages/AudioBooks";
 import ConfidentSpeaker from "./pages/ConfidentSpeaker/index.jsx";
+import MathSection from "./pages/MathSection/index.jsx"
 
 
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/practice" element={<Practice />} />
         <Route path="/practice/audio-books" element={<AudioBooks />} />
         <Route path= "/practice/confident-speaker" element = {<ConfidentSpeaker/>}  />
+        <Route path = "practice/math" element = {<MathSection/>}  />
       </Routes>
     </BrowserRouter>
   );
