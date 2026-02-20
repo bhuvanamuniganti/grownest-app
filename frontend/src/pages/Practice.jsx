@@ -71,7 +71,7 @@ function Practice() {
 
         <div
           className="practice-card"
-          onClick={() => openSection("image")}
+          onClick={() => openSection("image-practice")}
         >
           <h3>✍ Oral & Written Practice</h3>
           <p>
