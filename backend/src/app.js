@@ -22,9 +22,11 @@ app.use(
 );
 
 app.use(express.json());
+
 app.use(fileUpload({
   useTempFiles: true,
-  tempFileDir: "./tmp/"
+  tempFileDir: "/tmp/",
+  limits: { fileSize: 10 * 1024 * 1024 },
 }));
 
 
