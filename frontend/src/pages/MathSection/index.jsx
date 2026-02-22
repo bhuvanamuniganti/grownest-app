@@ -39,6 +39,10 @@ export default function MathTutorSection() {
   const patternFileRef = useRef(null);
   const mountedRef = useRef(true);
 
+  const [chatInput, setChatInput] = useState("");
+const [chatMessages, setChatMessages] = useState([]);
+const [chatLoading, setChatLoading] = useState(false);
+
   const location = useLocation();
     const navigate = useNavigate();
 
@@ -395,12 +399,18 @@ export default function MathTutorSection() {
   };
 
   const removeProblemFile = () => {
-    setProblemFile(null);
-    if (preview) {
-      URL.revokeObjectURL(preview);
-      setPreview(null);
-    }
-  };
+  setProblemFile(null);
+
+  if (preview) {
+    URL.revokeObjectURL(preview);
+    setPreview(null);
+  }
+
+  // ADD THIS LINE
+  if (fileInputRef.current) {
+    fileInputRef.current.value = "";
+  }
+};
 
   const handlePatternFileChange = (e) => {
     const f = e?.target?.files?.[0];
@@ -411,9 +421,18 @@ export default function MathTutorSection() {
   };
 
   const removeTeacherPatternFile = () => {
-    setTeacherPatternFile(null);
-    if (teacherPatternPreview) { URL.revokeObjectURL(teacherPatternPreview); setTeacherPatternPreview(null); }
-  };
+  setTeacherPatternFile(null);
+
+  if (teacherPatternPreview) {
+    URL.revokeObjectURL(teacherPatternPreview);
+    setTeacherPatternPreview(null);
+  }
+
+  // ADD THIS LINE
+  if (patternFileRef.current) {
+    patternFileRef.current.value = "";
+  }
+};
 
   // styles for distinctive buttons (can adjust hexs to taste)
   const styles = {
@@ -689,6 +708,9 @@ export default function MathTutorSection() {
           {teacherSolution && <AnimatedButton onClick={() => downloadPDF("Math Solution (Teacher)", teacherSolution)} className="translator-btn" style={{ marginTop: 8, ...styles.download }}>⬇ Download Solution PDF</AnimatedButton>}
         </div>
       </div>
+
+
+
 
       <div id="alt-solution-anchor" style={{ marginTop: 18 }}>
         <div className="ai-output">
