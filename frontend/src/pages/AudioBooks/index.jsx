@@ -6,7 +6,7 @@ import "./index.css";
 export default function TranslatorSection() {
   const [text, setText] = useState("");
   const [translated, setTranslated] = useState("");
-
+const fileInputRef = useRef(null);
 
 
   const location = useLocation();
@@ -482,18 +482,26 @@ const [lang, setLang] = useState(
               >
                 Open
               </button>
-              <button
-                type="button"
-                className="tiny-btn close"
-                onClick={() => {
-                  setFile(null);
-                  if (preview) { URL.revokeObjectURL(preview); setPreview(null); }
-                  setBooks([]); // explicit: removing image clears suggestions
-                }}
-                title="Remove image"
-              >
-                ✖
-              </button>
+<button
+  type="button"
+  className="tiny-btn close"
+  onClick={() => {
+    setFile(null);
+    if (preview) {
+      URL.revokeObjectURL(preview);
+      setPreview(null);
+    }
+    setBooks([]);
+
+    // ⭐ IMPORTANT LINE
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }}
+>
+  ✖
+</button>
+
             </div>
           </div>
         )}
@@ -503,23 +511,25 @@ const [lang, setLang] = useState(
         <div className="controls-left">
           <label className="translator-btn choose">
             📂 Choose Image
-            <input
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }}
-              onChange={(e) => {
-                const selectedFile = e.target.files[0];
-                if (!selectedFile) return;
-                setFile(selectedFile);
-                if (preview) URL.revokeObjectURL(preview);
-                setPreview(URL.createObjectURL(selectedFile));
-                // do not clear books here — user may choose to re-analyze
-                setText("");
-                setTranslated("");
-                setExplanation("");
-                setDetectedLang("English"); // reset until analyze returns text
-              }}
-            />
+       <input
+  ref={fileInputRef}
+  type="file"
+  accept="image/*"
+  style={{ display: "none" }}
+  onChange={(e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+
+    setFile(selectedFile);
+    if (preview) URL.revokeObjectURL(preview);
+    setPreview(URL.createObjectURL(selectedFile));
+
+    setText("");
+    setTranslated("");
+    setExplanation("");
+    setDetectedLang("English");
+  }}
+/>
           </label>
 
           {/* Camera open button (orange) */}

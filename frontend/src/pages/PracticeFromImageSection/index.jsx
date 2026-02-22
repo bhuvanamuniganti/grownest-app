@@ -760,9 +760,29 @@ export default function PracticeFromImageSection() {
                         {file?.name || "Selected image"}
                       </div>
                       <div style={{ display: "flex", gap: 8 }}>
-                        <AnimatedButton onClick={() => { try { if (preview) URL.revokeObjectURL(preview); } catch (e) {} setPreview(null); setFile(null); }} style={{ background: "#ef4444", padding: "6px 8px" }}>
-                          ✕
-                        </AnimatedButton>
+
+
+                       <AnimatedButton
+  onClick={() => {
+    try {
+      if (preview) URL.revokeObjectURL(preview);
+    } catch (e) {}
+
+    setPreview(null);
+    setFile(null);
+
+    // ⭐ ADD THIS LINE
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }}
+  style={{ background: "#ef4444", padding: "6px 8px" }}
+>
+  ✕
+</AnimatedButton>
+
+
+
                         <AnimatedButton onClick={() => fileInputRef.current?.click()} style={{ background: "#3b82f6", padding: "6px 8px" }}>
                           ↺
                         </AnimatedButton>
