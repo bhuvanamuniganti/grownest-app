@@ -246,9 +246,9 @@ export default function ConfidentSpeakerSection() {
   const navigate = useNavigate();
 
 const parentLangFromPractice =
-  location.state?.parentLangFromPractice ||
-  location.state?.language ||
-  "hi";
+  location.state?.parentLanguage ||
+  JSON.parse(localStorage.getItem("child_profile") || "{}")?.parentLanguage ||
+  "Hindi";
 
 
   useEffect(() => {
@@ -422,10 +422,10 @@ const parentLangFromPractice =
     if (!transcript) return alert("Transcribe first.");
     setLoading(true);
     try {
-      const langMap = { hi: "Hindi", ta: "Tamil", te: "Telugu", en: "English", bn: "Bengali", ml: "Malayalam" };
-      const to = langMap[parentLangFromPractice
-] || parentLangFromPractice
- || "Hindi";
+    //  const langMap = { hi: "Hindi", ta: "Tamil", te: "Telugu", en: "English", bn: "Bengali", ml: "Malayalam" };
+ //  const to = langMap[parentLangFromPractice] || parentLangFromPractice|| "Hindi";
+
+ const to = parentLangFromPractice || "Hindi";
 
       const r = await fetch(`${API_BASE}/api/speaking/translate/forward`, {
         method: "POST",

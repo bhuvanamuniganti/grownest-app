@@ -46,9 +46,12 @@ function levenshtein(a = "", b = "") {
   return dp[m][n];
 }
 
-// parent language mapper
-function getParentLanguageName(code = "hi") {
-  const map = {
+function getParentLanguageName(lang = "Hindi") {
+  if (!lang) return "Hindi";
+
+  const value = String(lang).trim();
+
+  const codeMap = {
     hi: "Hindi",
     ta: "Tamil",
     te: "Telugu",
@@ -56,7 +59,18 @@ function getParentLanguageName(code = "hi") {
     bn: "Bengali",
     ml: "Malayalam",
   };
-  return map[String(code || "").toLowerCase()] || "Hindi";
+
+  // If already full language name
+  if (Object.values(codeMap).includes(value)) {
+    return value;
+  }
+
+  // If short code
+  if (codeMap[value.toLowerCase()]) {
+    return codeMap[value.toLowerCase()];
+  }
+
+  return "Hindi";
 }
 
 router.get("/_ping_openai", async (req, res) => {
@@ -212,10 +226,13 @@ router.post("/score", async (req, res) => {
     const spoken = String(req.body?.transcript || "").trim();
     const topic = String(req.body?.topic || "General");
     const parentLang = String(
+  req.body?.parentLanguage ||
   req.body?.parentLang ||
   req.body?.parentLangFromPractice ||
   "hi"
 );
+
+console.log("Incoming parentLang:", parentLang);
 
     const parentLanguageName = getParentLanguageName(parentLang);
 
@@ -332,12 +349,14 @@ router.post("/correct", async (req, res) => {
   try {
     const referenceText = String(req.body?.referenceText || "");
     const transcript = String(req.body?.transcript || "");
+  
     const parentLang = String(
+  req.body?.parentLanguage ||
   req.body?.parentLang ||
   req.body?.parentLangFromPractice ||
   "hi"
 );
-
+console.log("Incoming parentLang:", parentLang);
     const parentLanguageName = getParentLanguageName(parentLang);
 
     function postProcessCorrected(text = "") {
