@@ -82,17 +82,6 @@ function Practice() {
 
         <div
           className="practice-card"
-          onClick={() => openSection("")}
-        >
-          <h3>📘 Homework Helper</h3>
-          <p>
-            Get step-by-step guidance to understand and complete homework.
-            Focuses on correct approach, not just answers.
-          </p>
-        </div>
-
-        <div
-          className="practice-card"
           onClick={() => openSection("concept-clarity")}
         >
           <h3>🧠 Concept Clarity</h3>
