@@ -1,0 +1,98 @@
+/* UploadSection.css - button & responsive styles */
+
+/* Basic action-btn styles */
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start; /* keep icon+label left inside button */
+  gap: 8px;
+  min-width: 84px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
+  box-shadow: 0 1px 3px rgba(16,24,40,0.06);
+  user-select: none;
+  white-space: nowrap;
+}
+.action-btn:active { transform: translateY(1px); }
+.action-btn.disabled, .action-btn[disabled] { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+.action-btn.primary { background: linear-gradient(180deg,#06b6d4,#0891b2); color: #fff; }
+.action-btn.capture { background: linear-gradient(180deg,#03261a,#0a5d42); color: #fff; }
+.action-btn.danger { background: linear-gradient(180deg,#f87171,#ef4444); color: #fff; }
+.action-btn.info { background: linear-gradient(180deg,#60a5fa,#3b82f6); color: #fff; }
+.action-btn.file { background: linear-gradient(180deg, #93c5fd, #60a5fa);
+     color: #111; box-shadow: 0 1px 2px rgba(0,0,0,0.04); border: 1px solid rgba(15,23,42,0.06); }
+.action-btn.upload { background: linear-gradient(180deg,#6366f1,#4f46e5); color: #fff; }
+.action-btn.neutral { background: linear-gradient(180deg,#e6edf8,#dfeefb); color: #0f172a; }
+
+.action-btn.small-absolute { min-width: auto; width: auto; height: 34px; padding: 6px 10px; position: absolute; top: 10px; right: 10px; }
+
+/* Buttons Row Layout */
+.button-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
+  flex-wrap: nowrap; /* keep single row on medium+ */
+}
+
+/* Keep buttons compact */
+.button-row .action-btn {
+  flex: 0 0 auto;
+}
+
+/* File button stays inline by default */
+.button-row .action-btn.file {
+  flex: 0 0 auto;
+  min-width: 84px;
+}
+
+/* Small screens: wrap and place File on its own row */
+@media (max-width: 600px) {
+  .button-row {
+    flex-wrap: wrap;
+    justify-content: flex-start; /* top row left aligned */
+  }
+
+  /* Top-row buttons: allow them to shrink so they fit */
+  .button-row .action-btn:not(.file) {
+    min-width: 64px;
+    padding: 0 8px;
+    flex-shrink: 1;
+  }
+
+  /* File button: left-aligned, limited width so it doesn't full-bleed */
+  .button-row .action-btn.file {
+    flex-basis: auto !important;
+    max-width: 320px;   /* prevents full width on very narrow screens */
+    width: auto !important;
+    min-width: 100px;
+    align-self: flex-start;  /* left align on its own row */
+    justify-content: flex-start;
+    margin-left: 0;
+    margin-right: 0;
+    display: inline-flex;
+  }
+}
+
+/* Preserve your existing responsive layout */
+@media (max-width: 768px) {
+  .upload-flex { flex-direction: column !important; gap: 14px !important; }
+  .upload-left { flex: 1 1 auto !important; max-width: 100% !important; }
+  .upload-right { flex: 1 1 auto !important; max-width: 100% !important; }
+  .action-btn { min-width: 74px; height: 36px; font-size: 14px; padding: 0 10px; }
+}
+
+/* Medium tweak so three top buttons can shrink on narrow medium screens */
+@media (min-width: 601px) and (max-width: 1024px) {
+  .button-row .action-btn:not(.file) {
+    flex-shrink: 1;
+    min-width: 50px;
+  }
+}

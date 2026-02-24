@@ -80,16 +80,17 @@ function Practice() {
           </p>
         </div>
 
+        
         <div
           className="practice-card"
-          onClick={() => openSection("concept-clarity")}
+          onClick={() => openSection("sharing-section")}
         >
-          <h3>🧠 Concept Clarity</h3>
+          <h3>🤝Resourse Sharing</h3>
           <p>
-            Understand the “why” behind concepts with simple explanations.
-            Helps build strong foundations across subjects.
+            Give what you can, take what you need - build a stronger learning community.
           </p>
         </div>
+
       </div>
     </div>
   );

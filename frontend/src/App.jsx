@@ -5,6 +5,7 @@ import AudioBooks from "./pages/AudioBooks";
 import ConfidentSpeaker from "./pages/ConfidentSpeaker/index.jsx";
 import MathSection from "./pages/MathSection/index.jsx"
 import PracticeFromImageSection from "./pages/PracticeFromImageSection/index.jsx";
+import SharingSection from "./pages/SharingSection/index.jsx"
 
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
         <Route path= "/practice/confident-speaker" element = {<ConfidentSpeaker/>}  />
         <Route path = "/practice/math" element = {<MathSection/>}  />
         <Route path = "/practice/image-practice" element = {<PracticeFromImageSection/>}/>
+        <Route path = "/practice/sharing-section" element ={<SharingSection/>}/>
+    
         
       </Routes>
     </BrowserRouter>

@@ -1,0 +1,144 @@
+:root{
+  --gm-accent: #0e682f;
+  --page-bg: #f6faf6;
+}
+
+/* Page wrapper */
+.sharing-container {
+  min-height: 100vh;
+  background: var(--page-bg);
+  padding: 40px 20px;
+  text-align: center;
+}
+
+/* Page title */
+.sharing-container h2 {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--gm-accent);
+  margin-bottom: 40px;
+}
+
+/* Cards wrapper */
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* Card */
+.sharing-card {
+  width: 320px;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.25s ease;
+}
+
+.sharing-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Header */
+.card-header {
+  padding: 18px 16px;
+  text-align: center;
+  width: 100%;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gm-accent);
+}
+
+/* Image - FIXED VERSION */
+.card-image-wrapper {
+  width: 100%;
+  aspect-ratio: 3 / 4;   /* Perfect for portrait images */
+  overflow: hidden;
+}
+
+.card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%; /* prevents top face crop */
+  display: block;
+}
+
+/* Footer */
+.card-footer {
+  padding: 22px 0 25px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Button */
+.card-footer button {
+  width: 75%;
+  padding: 12px 0;
+  border: none;
+  border-radius: 30px;
+  background: var(--gm-accent);
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.card-footer button:hover {
+  background: #095222;
+}
+
+/* -------------------- */
+/* RESPONSIVE SECTION   */
+/* -------------------- */
+
+@media (max-width: 1024px) {
+  .sharing-card {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-wrapper {
+    gap: 30px;
+  }
+
+  .sharing-card {
+    width: 90%;
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sharing-container {
+    padding: 30px 15px;
+  }
+
+  .sharing-container h2 {
+    font-size: 24px;
+  }
+
+  .sharing-card {
+    width: 100%;
+  }
+
+  .card-footer button {
+    width: 80%;
+    font-size: 14px;
+  }
+}

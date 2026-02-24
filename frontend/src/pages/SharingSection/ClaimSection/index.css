@@ -1,0 +1,183 @@
+/* frontend/src/sections/ReceiveSection.css */
+
+/* Container */
+.receive-container {
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 1200px; /* keeps layout centered on very large screens */
+  box-sizing: border-box;
+}
+
+/* Search bar */
+.receive-container .search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.receive-container .search-bar input {
+  flex: 1;
+  min-width: 220px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* GRID: default 1 column (mobile) */
+.receive-container .cards-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 16px;
+  align-items: start;
+  box-sizing: border-box;
+}
+
+/* Force each card to fully occupy its grid cell and not expand it */
+.receive-container .cards-grid > .horizontal-card {
+  width: 100% !important;
+  min-width: 0 !important;
+  box-sizing: border-box;
+}
+
+/* Card */
+.receive-container .horizontal-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffffd6;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(2, 6, 23, 0.08);
+  overflow: hidden;
+  padding: 14px;
+  transition: transform 0.16s ease;
+}
+.receive-container .horizontal-card:hover { transform: translateY(-3px); }
+
+/* Image (mobile: top) */
+.receive-container .card-media-small {
+  width: 100%;
+  height: 220px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.receive-container .card-media-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+/* Text area */
+.receive-container .card-text { flex: 1; min-width: 0; }
+.receive-container .card-text h3 { margin: 0 0 6px; font-size: 18px; color: #0f172a; }
+.receive-container .card-text .desc { margin: 4px 0 10px; color: #334155; line-height: 1.4; }
+
+/* Buttons */
+.receive-container .actions { margin-top: 10px; display: flex; gap: 8px; }
+.receive-container .btn { padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; }
+.receive-container .btn.primary { background-color: #22c55e; color: white; }
+.receive-container .btn.clear { background-color: red; color: white; }
+.receive-container .btn.ghost { background-color: #e2e8f0; color: #334155; }
+
+/* Request form */
+.receive-container .request-form { margin-top: 30px; padding: 20px; }
+.receive-container .request-form form { display: flex; flex-direction: column; gap: 10px; }
+
+/* ---------- Responsive: exactly 2 columns at >=768px ---------- */
+@media (min-width: 768px) {
+  .receive-container .cards-grid {
+    /* enforce exactly two columns; minmax(0,1fr) prevents overflow-caused extra columns */
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .receive-container .horizontal-card {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .receive-container .card-media-small {
+    width: 130px;
+    height: 160px;
+    flex-shrink: 0;
+    margin-bottom: 0;
+    margin-right: 16px;
+  }
+
+  .receive-container .card-media-small img { object-fit: contain; }
+}
+
+/* Slightly larger image on very large screens */
+@media (min-width: 1200px) {
+  .receive-container .card-media-small { width: 150px; height: 180px; }
+}
+
+/* Safety: prevent third-party styles from forcing extra columns */
+.receive-container .cards-grid,
+.receive-container .cards-grid > * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* ---------- Thank-you Modal ---------- */
+.thankyou-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.thankyou-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.25);
+  width: 90%;
+  max-width: 480px;
+  padding: 20px;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.thankyou-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.thankyou-header h3 {
+  margin: 0;
+  color: #065f46;
+  font-size: 18px;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #6b7280;
+}
+
+.thankyou-body p {
+  font-size: 15px;
+  color: #1f2937;
+  margin: 10px 0;
+}
+
+.thankyou-actions {
+  margin-top: 18px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

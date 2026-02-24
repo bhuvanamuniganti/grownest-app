@@ -712,6 +712,7 @@ export default function PracticeFromImageSection() {
       >
         Back
       </button>
+      
       <h2>📝 Practice from Text or Image — Written & Oral</h2>
       <p>Paste text or upload a picture. We extract questions (answers hidden). You can take a written or oral test. Use Print to get a question paper (no answers).</p>
 
