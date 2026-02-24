@@ -66,7 +66,7 @@ export default function SharingSection() {
 
           <div className="card-image-wrapper">
             {/* Image from public folder */}
-            <img src="/public/upload.png" alt="Upload" />
+            <img src="/upload.png" alt="Upload" />
           </div>
 
           <div className="card-footer">
@@ -84,7 +84,7 @@ export default function SharingSection() {
 
           <div className="card-image-wrapper">
             {/* Image from public folder */}
-            <img src="/public/recieve.png" alt="Receive" />
+            <img src="/recieve.png" alt="Receive" />
           </div>
 
           <div className="card-footer">

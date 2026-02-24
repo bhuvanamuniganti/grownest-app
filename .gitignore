@@ -19,3 +19,7 @@ frontend/.env
 dist/
 build/
 "@ | Out-File -Encoding utf8 .gitignore
+
+backend/database.db
+
+backend/src/uploads/
