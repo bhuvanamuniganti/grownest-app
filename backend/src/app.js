@@ -25,7 +25,12 @@ app.use(
 
 app.use(express.json());
 
-app.use("/uploads", express.static("src/uploads"));
+const path = require("path");
+
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "uploads"))
+);
 
 app.use(fileUpload({
   useTempFiles: true,

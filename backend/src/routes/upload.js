@@ -250,13 +250,17 @@ router.post("/upload", async (req, res) => {
           "classifier_error",
       });
     }
+    ;
 
-  
+    const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://grownest-backend-j3ny.onrender.com"
+    : "http://localhost:5000";
 
-    // ✅ 7) Use local file instead of Cloudinary
-const imageUrl = `http://localhost:5000/uploads/${filename}`;
+const imageUrl = `${baseUrl}/uploads/${filename}`;
 
-    
+
+
 
     // ✅ 9) Save to DB
     const now = new Date().toISOString();
