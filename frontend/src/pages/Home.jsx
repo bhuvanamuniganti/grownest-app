@@ -80,7 +80,7 @@ function Home() {
       <div className="home-card">
         <h1>GrowNest 🌱</h1>
         <p className="subtitle">
-          Smart learning support for parents & children
+          You don’t need to be an expert. We’ll guide you
         </p>
 
         <div className="form-content">
