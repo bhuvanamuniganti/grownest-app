@@ -13,6 +13,11 @@ The repository is currently public.
 
 ---
 
+🌐 **Live Demo:**  
+https://grownestapp.netlify.app
+
+----
+
 ## 🌍 Problem Statement
 
 In many Indian middle-class, lower-income, and single-parent households, parents deeply value education but often feel underconfident while guiding their children at home.
@@ -21,7 +26,7 @@ To provide the best education, families sometimes stretch finances significantly
 
 During foundational years, this stress affects emotional well-being, confidence, and self-expression.
 
-GrowNest is designed to reduce academic stress, strengthen parent–child bonding, and provide emotionally safe learning support at home — regardless of parental educational background.
+GrowNest is designed to reduce academic stress, strengthen parent–child bonding, and provide emotionally safe learning support at home — regardless of parents educational background.
 
 ---
 
