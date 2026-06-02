@@ -17,6 +17,10 @@ app.use(
     origin: [
       "http://localhost:5173", // local development
       "https://grownestapp.netlify.app", // production frontend
+      "http://grownestapp.store",
+      "https://grownestapp.store",
+      "http://www.grownestapp.store",
+      "https://www.grownestapp.store"
     ],
     methods: ["GET", "POST"],
     credentials: true,
