@@ -307,7 +307,6 @@ router.post("/practice-image/grade", async (req, res) => {
 
 
 
-
 // -------------------- Transcribe --------------------
 router.post("/practice-image/transcribe", async (req, res) => {
   if (!req.files?.audio) {
@@ -322,7 +321,17 @@ router.post("/practice-image/transcribe", async (req, res) => {
 
   function convertToWav() {
     return new Promise((resolve, reject) => {
-      const args = ["-y", "-i", originalPath, "-ar", "16000", "-ac", "1", wavPath];
+      const args = [
+        "-y",
+        "-i",
+        originalPath,
+        "-ar",
+        "16000",
+        "-ac",
+        "1",
+        wavPath,
+      ];
+
       const proc = spawn(ffmpegPath, args);
 
       proc.on("error", reject);
@@ -337,55 +346,43 @@ router.post("/practice-image/transcribe", async (req, res) => {
     // Convert webm -> wav
     await convertToWav();
 
-    // Step 1: Transcribe audio (any language)
-    const response = await client.audio.transcriptions.create({
+    // Convert speech from any language directly to English
+    const response = await client.audio.translations.create({
       file: fs.createReadStream(wavPath),
       model: "whisper-1",
     });
 
-    const transcript = response.text || "";
-
-    // Step 2: Convert transcript to English
-    const translationResponse = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content:
-            "Translate the user's text to English. If it is already English, return it unchanged. Return only the translated text."
-        },
-        {
-          role: "user",
-          content: transcript
-        }
-      ],
-      temperature: 0
-    });
-
-    const englishText =
-      translationResponse.choices?.[0]?.message?.content?.trim() ||
-      transcript;
+    const englishText = response.text || "";
 
     // Cleanup
-    try { fs.unlinkSync(originalPath); } catch {}
-    try { fs.unlinkSync(wavPath); } catch {}
+    try {
+      fs.unlinkSync(originalPath);
+    } catch {}
+
+    try {
+      fs.unlinkSync(wavPath);
+    } catch {}
 
     return res.json({
-      text: englishText
+      text: englishText,
     });
-
   } catch (err) {
     console.error("Transcription error:", err);
 
-    try { fs.unlinkSync(originalPath); } catch {}
-    try { fs.unlinkSync(wavPath); } catch {}
+    try {
+      fs.unlinkSync(originalPath);
+    } catch {}
+
+    try {
+      fs.unlinkSync(wavPath);
+    } catch {}
 
     return res.status(500).json({
-      error: "Transcription failed: " + (err.message || "unknown error")
+      error:
+        "Transcription failed: " + (err.message || "unknown error"),
     });
   }
 });
-
 
 
 
