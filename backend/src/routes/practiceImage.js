@@ -309,8 +309,7 @@ router.post("/practice-image/grade", async (req, res) => {
 
 
 // -------------------- Transcribe --------------------
-// -------------------- Transcribe --------------------
-router.post("/practice-image/transcribe",  async (req, res) => {
+router.post("/practice-image/transcribe", async (req, res) => {
   if (!req.files?.audio) {
     return res.status(400).json({ error: "No audio file uploaded" });
   }
@@ -338,22 +337,52 @@ router.post("/practice-image/transcribe",  async (req, res) => {
     // Convert webm -> wav
     await convertToWav();
 
-    // Call Whisper with converted file
+    // Step 1: Transcribe audio (any language)
     const response = await client.audio.transcriptions.create({
       file: fs.createReadStream(wavPath),
       model: "whisper-1",
     });
 
+    const transcript = response.text || "";
+
+    // Step 2: Convert transcript to English
+    const translationResponse = await client.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content:
+            "Translate the user's text to English. If it is already English, return it unchanged. Return only the translated text."
+        },
+        {
+          role: "user",
+          content: transcript
+        }
+      ],
+      temperature: 0
+    });
+
+    const englishText =
+      translationResponse.choices?.[0]?.message?.content?.trim() ||
+      transcript;
+
     // Cleanup
     try { fs.unlinkSync(originalPath); } catch {}
     try { fs.unlinkSync(wavPath); } catch {}
 
-    return res.json({ text: response.text || "" });
+    return res.json({
+      text: englishText
+    });
+
   } catch (err) {
     console.error("Transcription error:", err);
+
     try { fs.unlinkSync(originalPath); } catch {}
     try { fs.unlinkSync(wavPath); } catch {}
-    return res.status(500).json({ error: "Transcription failed: " + (err.message || "unknown error") });
+
+    return res.status(500).json({
+      error: "Transcription failed: " + (err.message || "unknown error")
+    });
   }
 });
 
