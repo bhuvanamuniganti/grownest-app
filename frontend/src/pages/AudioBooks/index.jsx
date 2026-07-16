@@ -102,7 +102,7 @@ const [lang, setLang] = useState(
   };
 
   // === Book recommendations (only called after Analyze) ===
-  const fetchRecommendedBooks = async (inputText) => {
+  /*const fetchRecommendedBooks = async (inputText) => {
     setBooksLoading(true);
     try {
       const res = await fetch(`${API_BASE}/api/ai/recommend-books`, {
@@ -118,7 +118,43 @@ const [lang, setLang] = useState(
     } finally {
       setBooksLoading(false);
     }
-  };
+  };*/
+
+// === Book recommendations (only called after Analyze) ===
+const fetchRecommendedBooks = async (inputText) => {
+  setBooksLoading(true);
+
+  try {
+    const res = await fetch(`${API_BASE}/api/ai/recommend-books`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        text: inputText,
+        age: location.state?.age || "",
+        grade: location.state?.classLevel || "",
+        interests: location.state?.interest
+          ? [location.state.interest]
+          : [],
+        maxResults: 6,
+      }),
+    });
+
+    const data = await res.json();
+
+    setBooks(Array.isArray(data.result) ? data.result : []);
+  } catch (err) {
+    console.error("Books fetch error:", err);
+    setBooks([]);
+  } finally {
+    setBooksLoading(false);
+  }
+};
+
+
+
+
 
   // === API wrappers ===
   // Analyze (image upload)
@@ -667,9 +703,64 @@ const [lang, setLang] = useState(
                 <div style={{ fontWeight: 700 }}>{b.title}</div>
                 <div style={{ fontSize: 13, color: "#444", marginBottom: 6 }}>{(b.authors || []).join(", ")}</div>
                 <div style={{ fontSize: 12, color: "#666", height: 40, overflow: "hidden" }}>{b.description || ""}</div>
-                <div style={{ marginTop: 8, display: "flex", gap: 8 }}>
-                  {b.infoLink && <a href={b.infoLink} target="_blank" rel="noreferrer" className="translator-btn play" style={{ padding: "6px 8px", fontSize: 13 }}>View</a>}
-                </div>
+                <div
+  style={{
+    marginTop: 10,
+    display: "flex",
+    gap: 8,
+    flexWrap: "wrap",
+  }}
+>
+  {b.infoLink && (
+    <a
+      href={b.infoLink}
+      target="_blank"
+      rel="noreferrer"
+      className="translator-btn play"
+      style={{ padding: "6px 10px", fontSize: 13 }}
+    >
+      📖 Preview
+    </a>
+  )}
+
+  {b.amazonLink && (
+    <a
+      href={b.amazonLink}
+      target="_blank"
+      rel="noreferrer"
+      className="translator-btn"
+      style={{
+        padding: "6px 10px",
+        fontSize: 13,
+        background: "#ff9900",
+        color: "#fff",
+        textDecoration: "none",
+        borderRadius: 6,
+      }}
+    >
+      🛒 Amazon
+    </a>
+  )}
+
+  {b.flipkartLink && (
+    <a
+      href={b.flipkartLink}
+      target="_blank"
+      rel="noreferrer"
+      className="translator-btn"
+      style={{
+        padding: "6px 10px",
+        fontSize: 13,
+        background: "#2874f0",
+        color: "#fff",
+        textDecoration: "none",
+        borderRadius: 6,
+      }}
+    >
+      🛍️ Flipkart
+    </a>
+  )}
+</div>
               </div>
             </div>
           ))}

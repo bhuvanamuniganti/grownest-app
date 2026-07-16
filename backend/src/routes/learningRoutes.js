@@ -308,7 +308,7 @@ Text:
       try {
         const q = encodeURIComponent(`${title} ${authors.join(" ")}`.trim());
         const url = `https://openlibrary.org/search.json?q=${q}&limit=1`;
-        const r = await fetch(url);
+        const r = await global.fetch(url);
         if (!r.ok) return null;
         const j = await r.json();
         if (Array.isArray(j.docs) && j.docs.length > 0 && j.docs[0].cover_i) {
