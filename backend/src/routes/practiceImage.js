@@ -267,19 +267,39 @@ router.post("/practice-image/grade", async (req, res) => {
     // Build a compact grading prompt for each question
     // We'll send a single request with all Q&A pairs to reduce calls
     const payload = {
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: "You are an exam grader. For each question+expected answer and a user's answer, return a JSON array 'results' with objects: { id, correct (true|false), percent (0-100), feedback (short) }." },
-        {
-          role: "user",
-          content:
-            "Grade the following responses. Return STRICT JSON only, no extra text: { \"results\": [ { id, correct, percent, feedback } ] }\n\n" +
-            "Rules: treat percent 80+ as correct=true. Give short constructive feedback. If expected answer is long, allow partial credit if user matches key points.\n\n" +
-            "Data:\n" +
-            JSON.stringify({ questions: questions.map(q => ({ id: q.id, question: q.question, expected: q.answer })), userAnswers })
-        }
-      ],
-      temperature: 0.0,
+      model: "gpt-5.6-terra",
+
+    messages: [
+  {
+    role: "system",
+    content: `You are an intelligent educational examiner.
+
+Evaluate each student's answer based on the QUESTION itself, not only the expected answer.
+
+Rules:
+- The expected answer is only a reference.
+- Determine whether the student's answer is factually correct in general.
+- Accept alternative correct answers, synonyms, equivalent wording, and different valid examples.
+- If the question allows multiple valid answers (examples: states, countries, fruits, animals, programming languages, examples, uses, advantages), accept any factually correct answer.
+- Only mark an answer incorrect if it is factually wrong, irrelevant, or does not answer the question.
+- Give partial credit when the answer is partially correct.
+- Return STRICT JSON only.`
+  },
+  {
+    role: "user",
+    content:
+      "Grade the following responses. Return STRICT JSON only: { \"results\": [ { id, correct, percent, feedback } ] }\n\n" +
+      "Data:\n" +
+      JSON.stringify({
+        questions: questions.map(q => ({
+          id: q.id,
+          question: q.question,
+          expected: q.answer
+        })),
+        userAnswers
+      })
+  }
+],
       response_format: { type: "json_object" },
     };
 
@@ -391,25 +411,41 @@ router.post("/practice/oral-grade", async (req, res) => {
   try {
     const { question = "", transcript = "", expected = "" } = req.body || {};
     if (!question) return res.status(400).json({ error: "Missing question" });
+const prompt = `
+You are an intelligent educational examiner.
 
-    const prompt = `
-You are an exam grader. Grade the student's transcript against the expected answer.
-Return STRICT JSON: { "correct": true|false, "percent": 0-100, "feedback": "short text" }.
+Evaluate the student's transcript based on the QUESTION itself, not only the expected answer.
+
+The expected answer is only a reference.
+
+Rules:
+- Determine whether the student's answer is factually correct in general.
+- Accept alternative correct answers, synonyms, equivalent wording, and different valid examples.
+- If the question allows multiple valid answers, accept any factually correct response.
+- Only mark incorrect if the answer is factually wrong, irrelevant, or does not answer the question.
+- Give partial credit when the answer is partially correct.
+
+Return STRICT JSON:
+{
+  "correct": true|false,
+  "percent": 0-100,
+  "feedback": "short text"
+}
 
 Question: ${question}
-Expected answer: ${expected}
-Student transcript: ${transcript}
 
-Scoring rules: 80+ => correct true. Give partial credit for key points. Keep feedback short and constructive.
+Expected answer:
+${expected}
+
+Student transcript:
+${transcript}
 `;
-
     const r = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
       messages: [
         { role: "system", content: "You are a concise grader returning strict JSON only." },
         { role: "user", content: prompt },
       ],
-      temperature: 0.0,
       response_format: { type: "json_object" },
     });
 
@@ -446,13 +482,12 @@ Base material (optional):
 ${baseText.slice(0, 2000)}
 `;
     const r = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
       messages: [
         { role: "system", content: "Return STRICT JSON only." },
         { role: "user", content: prompt },
       ],
       response_format: { type: "json_object" },
-      temperature: 0.7,
     });
     let parsed = {};
     try { parsed = JSON.parse(r.choices?.[0]?.message?.content || "{}"); } catch {}

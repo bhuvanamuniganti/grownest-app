@@ -62,7 +62,7 @@ router.post("/qa", async (req, res) => {
   try {
     const { text } = req.body;
     const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
       messages: [
         { role: "system", content: "Generate question-answer pairs." },
         { role: "user", content: text }
@@ -113,7 +113,7 @@ router.post("/summary", async (req, res) => {
   try {
     const { text } = req.body;
     const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
       messages: [
         { role: "system", content: "Summarize this text clearly." },
         { role: "user", content: text }
@@ -187,7 +187,7 @@ router.post("/similar", async (req, res) => {
   try {
     const { text } = req.body;
     const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
       messages: [
         { role: "system", content: "Given a question, generate 3 to 5 similar practice questions without answers." },
         { role: "user", content: text }
@@ -262,12 +262,11 @@ Text:
     `;
 
     const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
       messages: [
         { role: "system", content: "You are a helpful book recommendation assistant." },
         { role: "user", content: prompt },
       ],
-      temperature: 0.7,
     });
 
     let raw = completion.choices?.[0]?.message?.content || "[]";

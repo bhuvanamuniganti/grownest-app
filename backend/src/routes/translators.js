@@ -381,12 +381,11 @@ Return ONLY the topic.
 
 
     const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
       messages: [
         { role: "system", content: "You are a helpful book recommendation assistant." },
         { role: "user", content: prompt },
       ],
-      temperature: 0.7,
     });
 
    const searchQuery =
@@ -767,13 +766,12 @@ DO NOT break these rules. If the user's text is already short, still follow the 
     console.debug("User text:", text);
 
     const chatResp = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
       messages: [
         { role: "system", content: prompt },
         { role: "user", content: text },
       ],
-      temperature: 0.2,   // lower temperature => less creative/storylike answers
-      max_tokens: 800,
+      max_completion_tokens: 800,
     });
 
     const explanation = (chatResp.choices?.[0]?.message?.content || "").trim();
