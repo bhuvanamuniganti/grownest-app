@@ -711,5 +711,126 @@ DO NOT break these rules. If the user's text is already short, still follow the 
   }
 });
 
+// Renderer-ready lesson data for a future FFmpeg or image-generation pipeline.
+router.post("/video-storyboard", async (req, res) => {
+  try {
+    const {
+      topic = "",
+      extractedText = "",
+      language = "English",
+      age,
+      grade = "",
+      parentLanguage = "English",
+    } = req.body || {};
+
+    const cleanTopic = String(topic).trim();
+    const cleanText = String(extractedText).trim();
+    const cleanLanguage = String(language).trim() || "English";
+    const cleanGrade = String(grade).trim();
+    const cleanParentLanguage = String(parentLanguage).trim() || "English";
+    const childAge = Number(age);
+
+    if (!cleanTopic && !cleanText) {
+      return res.status(400).json({
+        error: "Please provide a topic or extracted textbook text.",
+      });
+    }
+
+    if (!Number.isFinite(childAge) || childAge < 3 || childAge > 18) {
+      return res.status(400).json({
+        error: "Please provide a valid child age between 3 and 18.",
+      });
+    }
+
+    const prompt = `You are GrowNest's educational lesson designer for children.
+Create a calm, accurate, age-appropriate 2-3 minute lesson storyboard.
+Narration and on-screen text MUST be in ${cleanLanguage}. Parent guidance MUST be in ${cleanParentLanguage} and easy for a non-expert parent.
+Child age: ${childAge}; Grade/Class: ${cleanGrade || "Not specified"}.
+Source topic: ${cleanTopic || "Derive the topic from the textbook text."}
+Source textbook text: """${cleanText.slice(0, 7000)}"""
+Return STRICT JSON ONLY, with no markdown or extra keys:
+{"title":"","learningObjective":"","estimatedDuration":"2-3 minutes","difficulty":"","scenes":[{"scene":1,"title":"","visualDescription":"","narration":"","onscreenText":"","parentGuidance":""}],"summary":"","keywords":[]}
+Rules: Create 5-7 scenes in a logical sequence. Each narration should take 15-25 seconds to speak. visualDescription must be a safe, clear direction for a future renderer without copyrighted characters. onscreenText maximum 12 words. Include a recap or encouragement scene. keywords must contain 3-8 short strings.`;
+
+    const completion = await client.chat.completions.create({
+      model: "gpt-5.6-terra",
+      messages: [
+        {
+          role: "system",
+          content: "Return valid JSON only. Never wrap JSON in markdown.",
+        },
+        { role: "user", content: prompt },
+      ],
+    
+      response_format: { type: "json_object" },
+    });
+
+    let storyboard;
+    try {
+      storyboard = JSON.parse(
+        completion.choices?.[0]?.message?.content || "{}"
+      );
+    } catch (parseError) {
+      console.error("Video storyboard JSON parse error:", parseError);
+      return res.status(502).json({
+        error: "The lesson generator returned an invalid storyboard. Please try again.",
+      });
+    }
+
+    const scenes = Array.isArray(storyboard.scenes)
+      ? storyboard.scenes
+          .slice(0, 7)
+          .map((scene, index) => ({
+            scene: Number(scene?.scene) || index + 1,
+            title: String(scene?.title || `Scene ${index + 1}`).trim(),
+            visualDescription: String(
+              scene?.visualDescription || "Simple educational illustration."
+            ).trim(),
+            narration: String(scene?.narration || "").trim(),
+            onscreenText: String(scene?.onscreenText || "").trim(),
+            parentGuidance: String(
+              scene?.parentGuidance ||
+                "Encourage your child to share one idea."
+            ).trim(),
+          }))
+          .filter((scene) => scene.narration)
+      : [];
+
+    if (scenes.length < 3) {
+      return res.status(502).json({
+        error: "The lesson generator returned too few scenes. Please try again.",
+      });
+    }
+
+    return res.json({
+      title: String(storyboard.title || cleanTopic || "Your AI Lesson").trim(),
+      learningObjective: String(
+        storyboard.learningObjective ||
+          "Understand the key idea through a short guided lesson."
+      ).trim(),
+      estimatedDuration: "2-3 minutes",
+      difficulty: String(
+        storyboard.difficulty || `Suitable for age ${childAge}`
+      ).trim(),
+      scenes,
+      summary: String(
+        storyboard.summary ||
+          "Review the lesson together and ask your child what they remember."
+      ).trim(),
+      keywords: Array.isArray(storyboard.keywords)
+        ? storyboard.keywords
+            .slice(0, 8)
+            .map((keyword) => String(keyword).trim())
+            .filter(Boolean)
+        : [],
+    });
+  } catch (err) {
+    console.error("Video storyboard error:", err);
+    return res.status(500).json({
+      error: "Unable to generate the lesson storyboard right now.",
+    });
+  }
+});
+
 
 module.exports = router;

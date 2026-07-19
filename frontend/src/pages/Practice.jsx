@@ -80,6 +80,16 @@ function Practice() {
           </p>
         </div>
 
+
+          <div
+  className="practice-card"
+  onClick={() => openSection("story-board")}
+>
+  <h3>🎬 AI Lesson Storyboard</h3>
+  <p>
+    Transform a textbook page into an AI-generated lesson storyboard with scene-by-scene narration, visual guidance, and parent-friendly explanations.
+  </p>
+</div>
         
         <div
           className="practice-card"

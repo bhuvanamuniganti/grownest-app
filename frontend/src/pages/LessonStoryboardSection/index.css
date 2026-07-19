@@ -1,0 +1,48 @@
+.lesson-video-page { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; color: #23402f; }
+.lesson-video-header { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 20px; }
+.lesson-video-header h2, .lesson-storyboard h2 { margin: 0; color: #286044; }
+.lesson-video-header p, .lesson-storyboard-title-row p { margin: 6px 0 0; color: #58705f; }
+.lesson-video-panel, .lesson-storyboard, .lesson-footer-card { background: #fff; border: 1px solid #d9eadf; border-radius: 16px; box-shadow: 0 8px 24px rgba(45, 97, 64, .08); }
+.lesson-video-panel, .lesson-storyboard { padding: 22px; }
+.lesson-video-profile, .lesson-meta, .lesson-video-actions, .lesson-keywords { display: flex; flex-wrap: wrap; gap: 10px; }
+.lesson-video-profile { margin-bottom: 20px; }
+.lesson-video-profile span, .lesson-meta span, .lesson-keywords span { background: #edf8ef; border-radius: 999px; color: #286044; font-size: .9rem; padding: 6px 11px; }
+.lesson-video-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.lesson-video-input-group { display: flex; flex-direction: column; gap: 9px; }
+.lesson-video-panel label { display: block; font-weight: 700; margin: 16px 0 8px; }
+.lesson-video-input-group label { margin: 0; }
+.lesson-video-panel input, .lesson-video-panel select, .lesson-video-panel textarea { box-sizing: border-box; width: 100%; border: 1px solid #c8dccc; border-radius: 9px; font: inherit; padding: 11px; }
+.lesson-video-panel textarea { resize: vertical; }
+.lesson-image-preview { width: 100%; max-height: 210px; border: 1px solid #d9eadf; border-radius: 10px; object-fit: contain; }
+.lesson-video-actions { margin-top: 18px; }
+.lesson-primary-btn, .lesson-secondary-btn, .lesson-preview-btn, .lesson-listen-btn, .lesson-reset-btn { border: 0; border-radius: 9px; cursor: pointer; font: inherit; font-weight: 700; padding: 10px 15px; }
+.lesson-primary-btn, .lesson-preview-btn { background: #2e8b57; color: #fff; }
+.lesson-secondary-btn, .lesson-listen-btn { background: #e7f5eb; color: #256b43; }
+.lesson-reset-btn { background: #f4f4f4; color: #48544d; }
+.lesson-primary-btn:disabled, .lesson-secondary-btn:disabled, .lesson-listen-btn:disabled { cursor: not-allowed; opacity: .6; }
+.lesson-error { color: #af2828; font-weight: 600; margin: 14px 0 0; }
+.lesson-storyboard { margin-top: 24px; }
+.lesson-storyboard-title-row { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+.lesson-meta { margin: 16px 0; }
+.lesson-preview-stage { background: linear-gradient(135deg, #edf8ef, #f7fbf8); border: 1px solid #b8dabc; border-radius: 12px; margin: 18px 0; padding: 20px; text-align: center; }
+.lesson-preview-stage h3 { margin: 8px 0; }
+.lesson-preview-narration { font-size: 1.08rem; line-height: 1.6; }
+.lesson-preview-onscreen, .lesson-onscreen-text { color: #1f6b45; font-weight: 800; }
+.lesson-scene-list { display: grid; gap: 14px; }
+.lesson-scene-card { background: #fbfefb; border: 1px solid #d9eadf; border-left: 5px solid #a8d7b2; border-radius: 12px; display: flex; gap: 14px; padding: 16px; }
+.lesson-scene-card.is-active { border-left-color: #2e8b57; box-shadow: 0 5px 16px rgba(46, 139, 87, .12); }
+.lesson-scene-number { align-items: center; background: #2e8b57; border-radius: 50%; color: #fff; display: flex; flex: 0 0 34px; font-weight: 800; height: 34px; justify-content: center; }
+.lesson-scene-content h3 { margin: 0 0 8px; }
+.lesson-scene-content p { line-height: 1.55; margin: 7px 0; }
+.lesson-listen-btn { margin-top: 6px; }
+.lesson-footer-card { margin-top: 18px; padding: 18px; }
+.lesson-render-note { color: #62746a; font-size: .92rem; }
+.lesson-footer-card details { margin-top: 12px; }
+.lesson-footer-card summary { color: #286044; cursor: pointer; font-weight: 700; }
+.lesson-footer-card pre { max-height: 300px; overflow: auto; background: #193126; border-radius: 8px; color: #e9fff0; font-size: .78rem; padding: 14px; white-space: pre-wrap; }
+
+@media (max-width: 700px) {
+  .lesson-video-grid { grid-template-columns: 1fr; }
+  .lesson-video-header, .lesson-storyboard-title-row { align-items: stretch; flex-direction: column; }
+  .lesson-preview-btn { width: 100%; }
+}
