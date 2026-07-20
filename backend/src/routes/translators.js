@@ -707,6 +707,146 @@ MANDATORY:
 });
 
 
+// === Understanding Check (Audiobook comprehension test) ===
+// Mount separately at /api/learning so this resolves to
+// POST /api/learning/audiobook-understanding
+router.post("/audiobook-understanding", async (req, res) => {
+  try {
+    const {
+      extractedText = "",
+      translatedText = "",
+      explanation = "",
+      lessonLanguage = "English",
+      parentLanguage = "English",
+      ownWords = "",
+      questions = [],
+      curiosity = {},
+      realLife = {},
+    } = req.body;
+
+    // Need at least some lesson content to evaluate against
+    const lessonContent = [explanation, translatedText, extractedText]
+      .filter((t) => t && t.trim())
+      .join("\n\n");
+
+    if (!lessonContent.trim()) {
+      return res.status(400).json({
+        error: "⚠️ No lesson content available to evaluate against.",
+      });
+    }
+
+    if (!ownWords.trim() && (!Array.isArray(questions) || questions.length === 0)) {
+      return res.status(400).json({
+        error: "⚠️ Please provide at least one response before submitting.",
+      });
+    }
+
+    const safeQuestions = Array.isArray(questions)
+      ? questions.slice(0, 10).map((q) => ({
+          question: (q.question || "").toString().trim(),
+          answer: (q.answer || "").toString().trim(),
+        }))
+      : [];
+
+    const systemPrompt = `
+You are a warm, encouraging learning coach for a child, evaluating their understanding
+of ONE SPECIFIC LESSON they just studied. You must NOT ask or evaluate anything outside
+the scope of the lesson content provided below.
+
+STEP 1 — Identify the lesson topic yourself from the LESSON CONTENT (e.g. "Solar System",
+"Water Cycle", "Human Heart", "Plants", "Fractions"). Do not ask the child what the topic is.
+
+STEP 2 — Evaluate the child's responses ONLY against this lesson's content. Every comment,
+concept mentioned, and suggestion must be specific to THIS lesson — never generic advice.
+
+Return STRICT JSON ONLY (no markdown, no code fences, no commentary) with exactly these keys:
+{
+  "lessonTopic": string,
+  "understandingLevel": string,          // e.g. "Strong", "Developing", "Needs Practice"
+  "conceptsUnderstood": string,          // specific concepts from THIS lesson the child grasped
+  "conceptsToRevisit": string,           // specific concepts from THIS lesson needing more practice
+  "accuracyOfOwnQuestions": string,      // how relevant/accurate the child's self-made questions were
+  "qualityOfAnswers": string,            // quality of the child's own answers to their own questions
+  "curiosityLevel": string,              // e.g. "High", "Medium", "Low", with brief why
+  "confidenceLevel": string,             // e.g. "Confident", "Somewhat unsure", with brief why
+  "personalizedFeedback": string,        // 2-4 sentences, specific to this child's responses
+  "encouragement": string,               // 1-2 warm, positive sentences
+  "suggestedNextTopics": string          // 1-3 topics related to THIS lesson to explore next
+}
+
+Write all text values in ${parentLanguage} so a parent can read the report easily.
+Keep each value concise (max ~3 sentences). Be kind and encouraging, never harsh — this is
+a young child. If a section was left blank, note it gently in feedback rather than penalizing harshly.
+`.trim();
+
+    const userPayload = `
+LESSON CONTENT (source of truth — the child's test must relate only to this):
+"""
+${lessonContent.slice(0, 3000)}
+"""
+
+Lesson language: ${lessonLanguage}
+
+CHILD'S RESPONSES:
+
+1) Explain in Your Own Words:
+"${ownWords || "(not answered)"}"
+
+2) Child-Created Questions & Answers:
+${
+  safeQuestions.length > 0
+    ? safeQuestions
+        .map((q, i) => `Q${i + 1}: ${q.question || "(no question)"}\nA${i + 1}: ${q.answer || "(no answer)"}`)
+        .join("\n\n")
+    : "(no questions created)"
+}
+
+3) Curiosity Reflection:
+- What question came to mind: "${curiosity.question || "(not answered)"}"
+- What surprised them most: "${curiosity.surprise || "(not answered)"}"
+- What they want to learn next: "${curiosity.nextTopic || "(not answered)"}"
+
+4) Real-Life Connection:
+- Real-life example: "${realLife.example || "(not answered)"}"
+- Where seen in daily life: "${realLife.dailyLife || "(not answered)"}"
+
+Return the JSON report now.
+`.trim();
+
+    const completion = await client.chat.completions.create({
+      model: "gpt-5.6-terra",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userPayload },
+      ],
+    });
+
+    const raw = completion.choices?.[0]?.message?.content || "{}";
+    let result;
+
+    try {
+      result = JSON.parse(raw);
+    } catch (e) {
+      const match = raw.match(/\{[\s\S]*\}/);
+      if (match) {
+        try {
+          result = JSON.parse(match[0]);
+        } catch (e2) {
+          console.error("Failed to parse understanding-check JSON:", e2);
+          return res.status(500).json({ error: "Model did not return valid JSON." });
+        }
+      } else {
+        return res.status(500).json({ error: "Model did not return valid JSON." });
+      }
+    }
+
+    res.json({ result });
+  } catch (err) {
+    console.error("❌ Understanding Check error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // === Math Tutor: Generate Similar Questions ===
 router.post("/math-similar", async (req, res) => {
   try {
@@ -793,7 +933,109 @@ DO NOT break these rules. If the user's text is already short, still follow the 
   }
 });
 
+// === Generate Understanding Test ===
+router.post("/generate-understanding-test", async (req, res) => {
+  try {
+    const {
+      extractedText = "",
+      translatedText = "",
+      explanation = "",
+      lessonLanguage = "English",
+    } = req.body;
 
+    const lessonContent = [
+      explanation,
+      translatedText,
+      extractedText,
+    ]
+      .filter((t) => t && t.trim())
+      .join("\n\n");
+
+    if (!lessonContent.trim()) {
+      return res.status(400).json({
+        error: "No lesson content available.",
+      });
+    }
+
+    const systemPrompt = `
+You are an expert primary school teacher.
+
+Your task is to generate a personalized Understanding Test based ONLY on the lesson content provided.
+
+Rules:
+- Detect the lesson topic automatically.
+- Never generate generic questions.
+- Every prompt must relate directly to the lesson.
+- Suitable for children aged 6–15.
+- Keep language simple.
+- Return STRICT JSON only.
+
+Return exactly this structure:
+
+{
+  "lessonTopic": "",
+  "ownWordsPrompt": "",
+  "questionInstruction": "",
+  "curiosityQuestion": "",
+  "surpriseQuestion": "",
+  "nextLearningQuestion": "",
+  "realLifeQuestion": "",
+  "dailyLifeQuestion": ""
+}
+`.trim();
+
+    const userPrompt = `
+Lesson Language:
+${lessonLanguage}
+
+Lesson Content:
+"""
+${lessonContent.slice(0, 5000)}
+"""
+
+Generate the Understanding Test now.
+`.trim();
+
+    const completion = await client.chat.completions.create({
+      model: "gpt-5.6-terra",
+      messages: [
+        {
+          role: "system",
+          content: systemPrompt,
+        },
+        {
+          role: "user",
+          content: userPrompt,
+        },
+      ],
+    });
+
+    const raw = completion.choices?.[0]?.message?.content || "{}";
+
+    let result;
+
+    try {
+      result = JSON.parse(raw);
+    } catch (e) {
+      const match = raw.match(/\{[\s\S]*\}/);
+
+      if (!match) {
+        return res.status(500).json({
+          error: "Model did not return valid JSON.",
+        });
+      }
+
+      result = JSON.parse(match[0]);
+    }
+
+    res.json(result);
+  } catch (err) {
+    console.error("Generate Understanding Test Error:", err);
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+});
 
 
 module.exports = router;

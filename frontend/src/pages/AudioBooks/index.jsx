@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { API_BASE } from '../../api';
 import { useLocation, useNavigate } from "react-router-dom";
+import UnderstandingCheck from "../../components/UnderstandingCheck";
 import "./index.css";
 
 export default function TranslatorSection() {
@@ -41,6 +42,7 @@ const [lang, setLang] = useState(
   // books state and loader
   const [books, setBooks] = useState([]);
   const [booksLoading, setBooksLoading] = useState(false);
+  const [showUnderstandingTest, setShowUnderstandingTest] = useState(false);
 
   const audioRef = useRef(null);
 
@@ -100,26 +102,17 @@ const [lang, setLang] = useState(
     if (asciiLetters > Math.max(5, nonAscii)) return "English";
     return "English";
   };
+<div style={{ marginTop: "30px", textAlign: "center" }}>
+  <button
+    className="translator-btn primary"
+    onClick={() => setShowUnderstandingTest(true)}
+  >
+    🧠 Understanding Test
+  </button>
 
-  // === Book recommendations (only called after Analyze) ===
-  /*const fetchRecommendedBooks = async (inputText) => {
-    setBooksLoading(true);
-    try {
-      const res = await fetch(`${API_BASE}/api/ai/recommend-books`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: inputText, maxResults: 6 }),
-      });
-      const data = await res.json();
-      setBooks(Array.isArray(data.result) ? data.result : []);
-    } catch (err) {
-      console.error("Books fetch error:", err);
-      setBooks([]);
-    } finally {
-      setBooksLoading(false);
-    }
-  };*/
 
+</div>
+  
 // === Book recommendations (only called after Analyze) ===
 const fetchRecommendedBooks = async (inputText) => {
   setBooksLoading(true);
@@ -689,7 +682,39 @@ const fetchRecommendedBooks = async (inputText) => {
         </div>
       )}
 
-      {/* Book Recommendations */}
+      
+<div style={{ marginTop: "24px", textAlign: "center" }}>
+
+ {explanation && explanation.trim() !== "" && (
+  <button
+    className="translator-btn primary"
+    onClick={() => setShowUnderstandingTest(true)}
+  >
+    🧠 Understanding Test
+  </button>
+)}
+
+</div>
+
+{showUnderstandingTest &&
+  explanation &&
+  explanation.trim() !== "" && (
+    <UnderstandingCheck
+      uploadedImage={preview}
+      extractedText={text}
+      translatedText={translated}
+      explanation={explanation}
+      lessonLanguage={lang}
+      parentLanguage={parentLanguage}
+      onClose={() => setShowUnderstandingTest(false)}
+    />
+)}
+
+
+
+
+
+        {/* Book Recommendations */}
       <div style={{ marginTop: 16 }}>
         <h4>📚 Suggested Books</h4>
         {booksLoading && <p>Looking for relevant books...</p>}

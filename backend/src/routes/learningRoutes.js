@@ -4,6 +4,7 @@ const path = require("path");
 const fs = require("fs");
 
 const router = express.Router();
+console.log("✅ learningRoutes loaded");
 const fetch = require("node-fetch");
 
 const client = new OpenAI({
