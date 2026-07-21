@@ -40,19 +40,35 @@ Only these Build Week additions are being submitted for evaluation.
 
 ## 🌍 Problem Statement
 
-In many Indian middle-class, lower-income, and single-parent households, parents deeply value education but often feel underconfident while guiding their children at home.
+Millions of families deeply value education because they see it as the strongest path to a better future for their children. However, many parents struggle to actively support learning at home due to language barriers, limited educational backgrounds, or busy schedules.
 
-To provide the best education, families sometimes stretch finances significantly — occasionally sacrificing personal needs — for coaching classes and digital tools. Despite these efforts, children may begin to associate learning with stress, comparison, and excessive screen dependency.
+To bridge this gap, many families invest heavily in coaching classes, digital learning platforms, and additional study materials—sometimes sacrificing their own needs to provide better educational opportunities. Despite these efforts, children may still experience academic pressure, struggle to understand concepts deeply, and gradually lose confidence in learning.
 
-During foundational years, this stress affects emotional well-being, confidence, and self-expression.
+At the same time, learning has become increasingly screen-centric. While technology makes information more accessible, it can also encourage excessive screen time, passive content consumption, comparison-driven learning, and unhealthy academic competition, making education more stressful than meaningful.
 
-GrowNest is designed to reduce academic stress, strengthen parent–child bonding, and provide emotionally safe learning support at home — regardless of parents educational background.
+Children under the age of 15 are naturally curious. With the right guidance and a supportive environment, this curiosity can grow into conceptual understanding, creativity, critical thinking, confidence, and a lifelong love for learning. Without meaningful support, however, that natural curiosity can gradually diminish.
+
+GrowNest is an AI-powered family learning companion that strengthens—not replaces—the learning relationship between parents and children. It makes learning interactive, personalized, and accessible by helping families learn, read, listen, speak, and understand concepts together in their preferred language, regardless of the parents' educational background.
+
+By providing a safe, supportive, and judgment-free learning environment, GrowNest encourages children to ask questions, explain concepts in their own words, practice speaking with confidence, and learn through understanding rather than memorization. At the same time, it empowers parents to actively participate in their child's learning journey.
+
+GrowNest's vision is to create a calm, confidence-first learning experience where technology strengthens family relationships, reduces financial and academic stress, nurtures curiosity, and makes quality education accessible to every child.
 
 ---
 
 ## 🌼 What It Does
 
-GrowNest is an AI-powered family learning companion that focuses on emotional well-being, confidence-building, and structured academic support.
+GrowNest is an AI-powered family learning companion designed to help parents actively and confidently support their children’s learning during early and foundational years — regardless of the parents’ educational background, language comfort, or academic expertise.
+
+It focuses on:
+
+Reducing academic stress and minimizing unhealthy screen dependency through active parent involvement.
+Helping busy parents support their children's learning without disrupting their daily routines.
+Bridging the learning gap between children and parents with limited education or time constraints.
+Enabling stress-free learning support at home, regardless of parents' educational background.
+Strengthening children's emotional well-being, confidence, and independent thinking.
+Encouraging meaningful parent–child interaction instead of passive screen consumption.
+Supporting structured, personalized, and guided learning in a calm, nurturing environment.
 
 
 ## 🤝 Built with GPT-5.6 & Codex
