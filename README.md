@@ -40,7 +40,7 @@ Only these Build Week additions are being submitted for evaluation.
 
 ## 🌍 Problem Statement
 
-Millions of families deeply value education because they see it as the strongest path to a better future for their children. However, many parents struggle to actively support learning at home due to language barriers, limited educational backgrounds, or busy schedules.
+Millions of indian families deeply value education because they see it as the strongest path to a better future for their children. However, many parents struggle to actively support learning at home due to language barriers, limited educational backgrounds, or busy schedules.
 
 To bridge this gap, many families invest heavily in coaching classes, digital learning platforms, and additional study materials—sometimes sacrificing their own needs to provide better educational opportunities. Despite these efforts, children may still experience academic pressure, struggle to understand concepts deeply, and gradually lose confidence in learning.
 
