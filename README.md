@@ -14,9 +14,29 @@ The repository is currently public.
 ---
 
 🌐 **Live Demo:**  
-https://grownestapp.netlify.app
+https://grownestapp.store/
 
 ----
+
+## 🚀 OpenAI Build Week Contributions
+
+GrowNest existed before OpenAI Build Week as an AI-assisted learning platform.
+
+During the Build Week submission period, I significantly extended the project using GPT-5.6 and Codex by adding major new functionality, including:
+
+- AI Lesson Storyboard for converting textbook pages into guided lessons
+- Interactive AI Understanding Test with personalized feedback
+- AI-powered speaking practice with recording, transcription, translation, and evaluation
+- AI-powered educational resource sharing
+- Smart AI-assisted book upload with automatic metadata extraction
+- Personalized educational book recommendations
+- Significant backend API expansion using GPT-5.6
+- Refactoring frontend into reusable React components
+- UI redesign and improved parent-focused experience
+
+Only these Build Week additions are being submitted for evaluation.
+
+---
 
 ## 🌍 Problem Statement
 
@@ -176,10 +196,12 @@ OpenAI models power multiple stages of the learning experience:
 * Text-to-Speech
 * Downloadable offline audio
 
+---
+
 ### Deployment
 
-* Frontend deployed on Netlify
-* Backend deployed on cloud
+- Frontend: Netlify
+- Backend: Google Cloud (Node.js + Express API)
 
 ---
 
@@ -288,17 +310,3 @@ By focusing on emotional safety, parental dignity, and stress-free learning, Gro
 * Parent confidence indicators
 * Screen-time reduction insights
 * Scalable partnerships with schools and NGOs
-
-## 📷 Screenshots
-
-### Home Page
-
-
-### Photo-Based Learning
-![Photo Learning](screenshots/photo-learning.png)
-
-### AI Understanding Test
-![Understanding Test](screenshots/understanding-test.png)
-
-### AI Feedback
-![AI Feedback](screenshots/feedback.png)
