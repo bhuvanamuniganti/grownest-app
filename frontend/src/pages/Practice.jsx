@@ -86,7 +86,7 @@ function Practice() {
           className="practice-card"
           onClick={() => openSection("sharing-section")}
         >
-          <h3>🤝Resourse Sharing</h3>
+          <h3>🤝Resource Sharing</h3>
           <p>
             Give what you can, take what you need - build a stronger learning community.
           </p>
