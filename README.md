@@ -18,25 +18,6 @@ https://grownestapp.store/
 
 ----
 
-## 🚀 OpenAI Build Week Contributions
-
-GrowNest existed before OpenAI Build Week as an AI-assisted learning platform.
-
-During the Build Week submission period, I significantly extended the project using GPT-5.6 and Codex by adding major new functionality, including:
-
-- Interactive AI Understanding Test with personalized feedback
-- AI-powered speaking practice with recording, transcription, translation, and evaluation
-- AI-powered educational resource sharing
-- Smart AI-assisted book upload with automatic metadata extraction
-- Personalized educational book recommendations
-- Significant backend API expansion using GPT-5.6
-- Refactoring frontend into reusable React components
-- UI redesign and improved parent-focused experience
-
-Only these Build Week additions are being submitted for evaluation.
-
----
-
 ## 🌍 Problem Statement
 
 Millions of indian families deeply value education because they see it as the strongest path to a better future for their children. However, many parents struggle to actively support learning at home due to language barriers, limited educational backgrounds, or busy schedules.
@@ -70,28 +51,6 @@ Encouraging meaningful parent–child interaction instead of passive screen cons
 Supporting structured, personalized, and guided learning in a calm, nurturing environment.
 
 
-## 🤝 Built with GPT-5.6 & Codex
-
-GrowNest was built through an iterative collaboration between me and OpenAI's GPT-5.6 and Codex.
-
-Rather than generating the entire application automatically, I used Codex as an AI engineering partner throughout development while making the final product, engineering, and user experience decisions myself.
-
-### How I Collaborated with Codex
-
-Throughout the project, I used Codex as an AI engineering partner while retaining responsibility for the product vision, feature design, implementation decisions, and testing.
-
-Examples of how Codex accelerated development include:
-
-- Refactoring React components into reusable modules.
-- Building and refining Express.js API routes for AI-powered learning features.
-- Designing and improving prompts for OCR, explanations, understanding evaluation, and book recommendations.
-- Debugging frontend and backend integration issues.
-- Improving state management and API communication between React and Express.
-- Generating boilerplate code that I then reviewed, modified, tested, and integrated into the application.
-- Assisting with documentation, code organization, and README improvements for the final submission.
-
-Every feature was iteratively refined through multiple conversations with Codex before being integrated into the final application.
-
 ### Product Decisions
 
 I designed the overall learning experience, including:
@@ -104,8 +63,6 @@ I designed the overall learning experience, including:
 
 ### Engineering Decisions
 
-While Codex accelerated implementation, I made the key engineering decisions, including:
-
 - Designing the complete learning workflow:
   **Image Upload → OCR → Translation → AI Explanation → Audiobook → Understanding Test → AI Evaluation → Book Recommendations**
 - Separating AI prompt generation from AI evaluation using dedicated backend APIs.
@@ -113,19 +70,6 @@ While Codex accelerated implementation, I made the key engineering decisions, in
 - Designing reusable frontend components for learning activities.
 - Iteratively testing and refining the application to ensure a smooth parent and child experience.
 
-GPT-5.6 and Codex assisted with implementation, while I made the architectural and integration decisions, including:
-
-- Modular Express API design
-- React component architecture
-- Frontend–backend communication
-- Prompt refinement for educational use cases
-- Testing, debugging, and iterative improvements
-
-### Human + AI Collaboration
-
-This project combines human creativity with AI-assisted software development.
-
-I defined the educational vision, user experience, and learning workflow. GPT-5.6 and Codex accelerated implementation, debugging, documentation, and prompt refinement, while every major feature was reviewed, tested, and integrated by me.
 
 ### 🔊 Downloadable Audiobooks (Offline Listening)
 
