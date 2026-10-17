@@ -24,7 +24,6 @@ GrowNest existed before OpenAI Build Week as an AI-assisted learning platform.
 
 During the Build Week submission period, I significantly extended the project using GPT-5.6 and Codex by adding major new functionality, including:
 
-- AI Lesson Storyboard for converting textbook pages into guided lessons
 - Interactive AI Understanding Test with personalized feedback
 - AI-powered speaking practice with recording, transcription, translation, and evaluation
 - AI-powered educational resource sharing
